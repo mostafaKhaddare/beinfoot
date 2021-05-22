@@ -1,32 +1,40 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <Header/>
+    <NavBar/>
+    <main class="py-3">
+         <div class="container">
+              <router-view></router-view>
+        </div>
+    </main>
+   <Footer/>
   </div>
 </template>
+<script>
 
+import Header from "@/components/global/Header.vue"
+import NavBar from "@/components/global/NavBar.vue"
+import Footer from "@/components/global/Footer.vue"
+export default {
+  components: {
+    Header,
+    NavBar,
+    Footer
+  }
+}
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700&display=swap');
+/* footer{
+  background: var(--main-color);
+  padding: 8px;
   text-align: center;
-  color: #2c3e50;
+} */
+body{
+  background-color: var(--bg-gris);
+}
+#app{
+  overflow-x: hidden;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

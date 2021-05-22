@@ -1,0 +1,60 @@
+/** start global rules */
+* {
+    --webkit-box-sizing: border-box;
+    --moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background-color: #f7f6f6;
+  }
+  :root{
+    --main-color : #0075ff ;
+    --bg-gris : #f0f2f5
+  }
+
+  .large-size{
+    font-size: 24px;
+  }
+  .medium-size{
+    font-size: 16px;
+  }
+  .small-size{
+    font-size: 11px;
+  }
+  .border-radius-small{
+    border-radius: 5px ;
+  }
+  .border-radius-medium{
+    border-radius: 10px ;
+  }
+  .border-radius-large{
+    border-radius: 20px ;
+  }
+  .bg-gris{
+  background-color: #f0f2f5;
+  }
+  .main-bg{
+      background-color: #0075ff ;
+  }
+  .main-color{
+    color: #0075ff;
+  }
+  .second-main-bg{
+    background-color: #222;
+  }
+  .second-main-color{
+    color: #222;
+  }
+  /** end global rules */
+
+  @keyframes navLinkFade{
+    from{
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to{
+      opacity: 1 ;
+      transform: translateX(0px);
+    }
+}

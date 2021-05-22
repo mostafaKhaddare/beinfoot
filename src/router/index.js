@@ -1,6 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from "@/views/Home"
+import News from "@/views/News"
+import ShowNews from "@/views/ShowNews"
+import ShowMatch from "@/views/ShowMatch"
+import AboutUs from "@/views/AboutUs"
+import PageNotFound from "@/components/global/PageNotFound"
+import CreateNews from '@/components/news/CreateNews'
+import EditNews from '@/components/news/EditNews'
+
+//* matches
+import CreateMatches from "@/components/matches/CreateMatches"
+import EditMatches from "@/components/matches/EditMatches"
+
+
 
 Vue.use(VueRouter)
 
@@ -11,13 +24,55 @@ const routes = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path : '/news',
+    name : 'News',
+    component : News
+  },
+  {
+    path: '/news/:id/:slug',
+    name: 'show-news',
+    component: ShowNews,
+    props : true
+  },
+  {
+    path : '/create-news',
+    name : "CreateNews",
+    component : CreateNews
+  },
+  {
+    path : '/create-matche',
+    name : "CreateMatch",
+    component : CreateMatches
+  },
+  {
+    path : '/edit-news/:id',
+    name : "EditNews",
+    component : EditNews,
+    props : true
+  },
+  {
+    path : '/edit-match/:id',
+    name : "EditMatch",
+    component : EditMatches,
+    props : true
+  },
+  {
+    path: '/matches/:id/:slug',
+    name: 'show-match',
+    component: ShowMatch,
+    props : true
+  },
+  {
+    path : '/about',
+    name : "AboutUs",
+    component : AboutUs
+  },
+  {
+    path : "/:catchAll(.*)",
+    component : PageNotFound
+  },
+ 
+  
 ]
 
 const router = new VueRouter({

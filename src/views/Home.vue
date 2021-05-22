@@ -1,18 +1,41 @@
-<template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<template lang="">
+    <div class="py-2">
+       <div class="row">
+           <aside class="col-lg-4  d-sm-none  d-lg-block">
+           </aside>
+           <div class="col-lg-8 col-sm-12">
+            <article class="py-2">
+                <Matches/>
+                <News/>
+             </article>
+             <AboutUs/>
+           </div>
+       </div>
+    </div>
 </template>
-
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Matches from "./Matches"
+import News from "./News"
+import AboutUs from "./AboutUs"
 
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
+    components  : {
+        Matches ,
+        News,
+        AboutUs
+    }
 }
 </script>
+<style scoped>
+
+@media  (min-width : 768px) and (max-width: 991px){     }
+/** large 1200px */
+@media (min-width: 992px) {
+} 
+/** small : 768px */
+@media  (max-width : 767px) {
+   aside{
+       display: none;
+   } 
+}
+</style>
