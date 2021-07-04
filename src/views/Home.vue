@@ -1,16 +1,20 @@
 <template lang="">
     <div class="py-2">
-       <div class="row">
-           <aside class="col-lg-4  d-sm-none  d-lg-block">
-           </aside>
-           <div class="col-lg-8 col-sm-12">
-            <article class="py-2">
-                <Matches/>
-                <News/>
-             </article>
-             <AboutUs/>
-           </div>
-       </div>
+        <div class="row">
+            <aside class="col-lg-4  d-sm-none  d-lg-block">
+            </aside>
+            <div class="col-lg-8 col-sm-12">
+                <section class="py-2">
+                    <Matches/>
+                </section>
+                <section class="py-2">
+                    <News/>
+                </section>
+                <section class="py-2">
+                    <AboutUs/>
+                </section>
+            </div>
+        </div>
     </div>
 </template>
 <script>

@@ -1,40 +1,38 @@
 <template lang="">
-    <div class="news-table bg-white  mt-2">
+    <main class="news-table bg-white  mt-2">
         <div class="news-title text-right second-main-color bg-white p-2 mb-2 font-weight-bold large-size border-radius-small">
-               اخبار الكرة  
+                اخبار الكرة  
         </div>
-          <router-link v-if="admin" :to="{name : 'CreateNews'}" class="btn btn-sm btn-primary mr-2"> 
-                <h4> craete news </h4>
-              </router-link>
         <div class="row flex-row-reverse ">
             <div class="col-md-4 col-lg-6 col-sm-12" v-for="(nouvelle, index) in news" :key="nouvelle.id" >
-               <OneNews :nouvelle="nouvelle" @delete="handleDelete" />
+                <OneNews :nouvelle="nouvelle" @delete="handleDelete" />
             </div>
         </div>
-    </div>
+    </main>
 </template>
 <script>
 import OneNews from "@/components/news/OneNews"
+import {db} from "@/firebase/config"
 export default {
-  components : {
-      OneNews
-  },
-  data(){
-      return{
-          news : [],
-          admin : false
-      }
-  },
-  methods: {
-    handleDelete(id){
-       this.news = this.news.filter(nouvelle => nouvelle.id !== id)}
-  },
-  mounted() {
-      fetch("http://localhost:5000/news")
-      .then(res=> res.json())
-      .then(data => this.news = data)
-      .catch(err => console.log(err))
-  }, 
+    components : {
+        OneNews
+    },
+    data(){
+        return{
+            news : [],
+        }
+    },
+        async mounted(){
+        try {
+            const res = await db.collection("news").orderBy('date' , 'desc').limit(10).onSnapshot(snap=>{
+                this.news = snap.docs.map(doc=>{
+                    return {...doc.data() , id : doc.id}
+                })                
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    },
 }
 </script>
 <style scoped>

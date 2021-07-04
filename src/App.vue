@@ -3,11 +3,11 @@
     <Header/>
     <NavBar/>
     <main class="py-3">
-         <div class="container">
+          <div class="container">
               <router-view></router-view>
         </div>
     </main>
-   <Footer/>
+    <Footer/>
   </div>
 </template>
 <script>
@@ -36,5 +36,4 @@ body{
 #app{
   overflow-x: hidden;
 }
-
 </style>

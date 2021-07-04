@@ -3,45 +3,60 @@
         <aside class="col-lg-4  d-sm-none  d-lg-block">
         </aside>
         <div class="col-lg-8 col-sm-12">
-            <div class="card text-right">
+            <div class="card text-right" v-if="nouvelle">
                 <div class="card-body ">
                     <GoBack/>
-                    <h4 class="card-title mt-3 font-weight-bold"> {{nouvelle.title}} </h4>
+                    <h4 class="card-title mt-3 font-weight-bold "> {{nouvelle.title}} </h4>
                     <p class="card-text text-right date font-weight-bolder"> {{nouvelle.data}} </p>
-                 </div>
-                <img class="card-img-top p-2 border-radius-large" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQMR9CO1D4p4fFQyRsXubbg_14OIDBDkJTOg&usqp=CAU" alt="">
+                </div>
+                <img v-if="!nouvelle.status" class="card-img-top p-2 border-radius-large" :src="nouvelle.img" :alt="nouvelle.title">
+                <div v-if="nouvelle.status" class="p-2">
+                <video-embed 
+                    :src="nouvelle.video">
+                </video-embed>
+                </div>
                 <div class="card-body">
                     <p class="card-text"> 
-                       {{nouvelle.content}}
-                     </p>
+                        {{nouvelle.content}}
+                    </p>
                 </div>
             </div>
+            <ClipLoader v-else  :size="size" :color="color" />
         </div>  
     </div>
 </template>
 <script>
     import GoBack from '@/components/global/GoBack'
+    import {db} from "@/firebase/config"
+    import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
+
 export default {
     props : ['id' , "slug"],
     data(){
         return{
-           nouvelle : {}
+            nouvelle : null,
+            color : "#0075ff",
+            size : "80px"
         }
     },
     components : {
-        GoBack
+        GoBack,
+        ClipLoader
     },
-    mounted(){
-         fetch(`http://localhost:5000/news/${this.id}`)
-         .then(res => res.json())
-         .then(data => this.nouvelle = data)
+    async mounted(){
+        const res = await db.collection('news').doc(this.id).get();
+        if(!res.exists){
+                throw Error("ce match n'a pas exists")
+            }
+        this.nouvelle = {...res.data() , id : this.id}
     } 
 }
 </script>
-<style>
+<style scoped>
 p{
-        text-align: justify;
-        line-height: 1.8;
+    line-height: 1.8;
+    padding-right: 25px;
+    padding-left: 22px;
     }
 .card .card-body .date{
     color: #8a8a8a;

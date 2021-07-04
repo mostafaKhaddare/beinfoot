@@ -1,32 +1,43 @@
 <template lang="">
-    <div class="matche-table p-2">
-          <div class="row" v-if="matches" > 
-              <div class="col-md-12 "  v-for="(match, index) in matches " :key="match.id">
-                   <OneMatch :match="match"   @delete="handleDelete" />
+    <main class="matche-table p-2">
+        <div  class="row"  > 
+            <div  class="col-md-12 "  v-for="(match, index) in matches " :key="match.id">
+                <router-link :to="{name : 'show-match' , params : {id : match.id }}">
+                    <OneMatch :match="match" />
+                </router-link>
             </div> 
-         </div>
-    </div>
+            <div class="text-right py-5 mx-auto" v-if="matches==null" > 
+                <ClipLoader  :size="size" :color="color"  />
+            </div>
+        </div>
+        
+    </main>
 </template>
 <script>
 import OneMatch from  "@/components/matches/OneMatch"
+import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
+import {db} from "../../firebase/config"
 export default {
     data(){
         return {
-            matches: []
+            matches: null,
+            color : "#0075ff",
+            size : "30px"
         }
     },
-    components : {OneMatch},
-    mounted(){
-        
-            fetch('http://localhost:5000/matches')
-        .then(res => res.json())
-        .then(data => this.matches = data)
-        .catch(err => console.log(err))
-        
+    components : {OneMatch , ClipLoader},
+    async mounted(){
+        try {
+            const res = await db.collection("matches").where('day' , '==' , 'today').onSnapshot(snap=>{
+                this.matches = snap.docs.map(doc=>{
+                    return {...doc.data() , id : doc.id}
+                })   
+                console.log(res)
+            })
+        } catch (error) {
+            console.log(error)
+        }
     },
-    methods: {
-         handleDelete(id){
-       this.matches= this.matches.filter(match => match.id !== id)}
-  },
 }
 </script>
+

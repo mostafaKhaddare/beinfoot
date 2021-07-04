@@ -1,24 +1,21 @@
 <template lang="">
-    <nav>
+    <nav class="main-bg">
         <div class="container  d-flex justify-content-between align-items-center">
-            <div class="logo">
-                <h4 class="m-0 "> the Nav </h4>
+            <div>
+                <span class="logo main-bg text-white"> b </span>
             </div>
             <ul ref="links" class="nav-links d-flex justify-content-around align-items-center m-0 w-50 flex-row-reverse ">
-                 <li class="list-inline-item">
+                <li class="list-inline-item">
                     <router-link class="text-white font-weight-bold" exact :to="{ name : 'Home' }"> مباريات  </router-link>
-                 </li>
-                 <li class="list-inline-item">
+                </li>
+                <li class="list-inline-item">
                     <router-link class="text-white font-weight-bold" exact :to="{ name : 'News' }"> الاخبار </router-link>
-                 </li>
+                </li>
                 <li class="list-inline-item">
                     <router-link class="text-white font-weight-bold" exact :to="{name : 'AboutUs'}"> معلومات عنا </router-link>
                 </li>
-                 <li class="list-inline-item">
+                <li class="list-inline-item">
                     <router-link class="text-white font-weight-bold" exact to="http://google.com" target="_blank">  صفحة انتستغرام </router-link>
-                </li>
-                 <li class="list-inline-item">
-                    <router-link class="text-white font-weight-bold" exact to="http://google.com" target="_blank">  صفحة فاسبووك </router-link>
                 </li>
             </ul>
             <div @click="navSlide" ref="burger" class="burger">
@@ -37,46 +34,42 @@ export default {
             const navLinks = nav.children
             const burger = this.$refs.burger
             const body = nav.ownerDocument.body
+            const path = this.$router.history.current.path
             //slide navbar
-             nav.classList.toggle("nav-active")
+            nav.classList.toggle("nav-active")
              //animate burger
-             burger.classList.toggle('toggle')
+            burger.classList.toggle('toggle')
              //fixed body
-             body.style.position = 'fixed'
+            if( path === '/' || path === "/news"){
+                body.style.position = 'fixed'
+            }
+            
              //animate links   
-             navLinks.forEach((link , index) => { 
-                 
-                 if(link.style.animation){
-                     link.style.animation = ""
-                     body.style.position = ''
-                 }else{
-                     link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.5}s`  
-                 }
+            navLinks.forEach((link , index) => { 
+                if(link.style.animation){
+                    link.style.animation = ""
+                    body.style.position = ''
+                }else{
+                    link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.5}s`  
+                }
             });
-        }
+        },
     },
 }
 </script>
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Sofadi+One&display=swap');
+
 .router-link-active{
 border-bottom: 3px solid #fff;
-padding: 5px;
-}
-nav{
-    background-color: var(--main-color);
+padding: 2px;
 }
 .container{
     min-height: 8vh;
 }
-.logo{
-    color:#fff;
-    letter-spacing: 5px;
-    font-size: 20px;
-}
 .nav-links{
     z-index: 1111;
 }
-
 .nav-links li a{
     text-decoration: none;
     font-size: 14px;
@@ -89,6 +82,14 @@ nav{
     height: 3px;
     margin: 5px;
     transition: all 0.3s ease;
+}
+.logo{
+    border-radius: 50%;
+    padding: 7px 12px;
+    box-shadow: 5px 0px 18px #fff;
+    font-size: 35px;
+    font-weight: bold;
+    font-family: 'Sofadi One', cursive;
 }
 
 
@@ -114,6 +115,9 @@ nav{
 .burger{
     display: block;
 }}
+.logo{
+    font-size: 22px;
+}
 /** small : 768px */
 @media screen and  (max-width : 767px) {
     nav{
@@ -151,6 +155,11 @@ transform: rotate(-45deg) translate(-5px , 6px);
 .toggle .line3{
     transform: rotate(45deg) translate(-5px , -6px);
     
+}
+.logo{
+    font-size: 28px;
+    padding: 7px 11px 0 12px;
+
 }
 /* animation */
 

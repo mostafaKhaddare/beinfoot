@@ -1,50 +1,51 @@
 <template lang="">
-    <div class="matches bg-white ">
+    <main class="matches bg-white ">
       <div class="matches-title d-flex justify-content-between align-items bg-white text-white p-2 border-radius-small flex-row-reverse  ">
         <div class="matche-title large-size font-weight-bold second-main-color">   مباريات {{day}} </div>
-        <div class="matche-date large-size font-weight-bold second-main-color"> 2020-12-25 </div>
+        <div class="matche-date large-size font-weight-bold second-main-color"> {{date(d) }}</div>
       </div>
       <div class="matches-button d-flex justify-content-around align-items-center my-2 py-1">
-         <router-link v-if="admin" :to="{name : 'CreateMatch'}" class="btn btn-sm btn-primary mr-2"> 
+              <router-link v-if="admin" :to="{name : 'CreateMatch'}" class="btn btn-sm btn-primary mr-2"> 
                 <h4> craete match </h4>
               </router-link>
         <span
-         @click="switchComponents('nav3', 'matchesTomorrow', 'الغد')"
-         :class="{ active: nav3 }"
-         class="button "> الغد </span>
+          @click="switchComponents('nav3', 'matchesTomorrow', 'الغد')"
+          :class="{ active: nav3 }"
+          class="button "> الغد </span>
         <span
-         @click="switchComponents('nav1', 'matchesToday', 'اليوم')"
-         :class="{ active: nav1 }"
-         class="button ml-3"
-         > اليوم 
+          @click="switchComponents('nav1', 'matchesToday', 'اليوم')"
+          :class="{ active: nav1 }"
+          class="button ml-3"
+          > اليوم 
         </span>
         <span
           @click="switchComponents('nav2', 'matchesYesterday', 'الامس')"
-         :class="{ active: nav2 }"
+          :class="{ active: nav2 }"
           class="button"> الامس </span>
 
-      </div>
-       
-       <transition name="fade" mode="out-in">
+      </div> 
+        <transition name="fade" mode="out-in">
+              
               <component :is="component"></component>
         </transition>
-    </div>
+    </main>
 </template>
 <script>
   import MatchesToday from "@/components/matches/MatchesToday"
   import MatchesYesterday from "@/components/matches/MatchesYesterday"
   import MatchesTomorrow from "@/components/matches/MatchesTomorrow"
 export default {
-   data(){
-     return{
+    data(){
+      return{
         component : "matchesToday",
-         nav1: true,
-         nav2: false,
-         nav3: false,
-         day : "اليوم",
-         admin : true
-     }
-   },
+          nav1: true,
+          nav2: false,
+          nav3: false,
+          day : "اليوم",
+          admin : false,
+          d : 0
+      }
+    },
     components : {
       MatchesToday ,
       MatchesYesterday,
@@ -59,16 +60,25 @@ export default {
         this.nav1 = false;
         this.nav3 = false;
         this.nav2 = true;
+        this.d = -1
       } else if (n === "nav3") {
         this.nav1 = false;
         this.nav3 = true;
         this.nav2 = false;
+        this.d = 1
       } else if (n === "nav1") {
         this.nav1 = true;
         this.nav3 = false;
         this.nav2 = false;
+        this.d = 0
       }
-         
+      },
+      date(d){
+        let newDate = new Date()
+        let date = newDate.getDate() + d
+        let year = newDate.getFullYear()
+        let day = newDate.getMonth()
+          return year + "-" +  date + "-" + day
       }
     },
 }
